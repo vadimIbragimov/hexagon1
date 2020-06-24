@@ -15,6 +15,7 @@ let checkCoordinates = (x, y, c) => {
         if(i<c.length-1){k=i+1}else{k=0}
         let xh = (y - c[i].y) * (c[k].x - c[i].x) / (c[k].y - c[i].y) + c[i].x;
         let yh = (x - c[i].x) * (c[k].y - c[i].y) / (c[k].x - c[i].x) + c[i].y;
+        console.log('i-',i,'x-',x,'y-',y,'k-',k,'zh-',xh, 'yh-',yh);
         if (
             !(i >= 0 && x < xh && i < 3 || i >= 3 && x > xh && i <= c.length - 1) &&
             !((i === 5 || i === 0) && y > yh || ((i === 2 || y === 3) && y < yh))
@@ -22,18 +23,21 @@ let checkCoordinates = (x, y, c) => {
             ret = false;
             break;
         }
+
     }
     return ret;
 };
 
 area.addEventListener('click', e => {
     for(let hg of hexagons){
-        if(checkCoordinates(e.layerX, e.layerY, hg.coordinates)){
+        if(checkCoordinates(e.layerX, e.layerY, hg.border.coordinates)){
             hg.changeValue(canvas,'#5268ff');
+            //break;
         }
-        console.log(hg.coordinates);
+        //console.log(hg.coordinates);
     }
-    console.log(checkCoordinates(e.layerX, e.layerY));
+    //console.log(checkCoordinates(e.layerX, e.layerY));
 });
+console.log(hexagons)
 
 
