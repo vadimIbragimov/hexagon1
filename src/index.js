@@ -6,7 +6,7 @@ let l = 3;
 let m = 5;
 let n = 7;
 
-const size = 30;
+const size = 20;
 
 let hexagons = [];
 
