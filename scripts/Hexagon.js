@@ -30,6 +30,10 @@ export class Hexagon {
             this.canvas.fillText('1', this.xc - this.size * 0.3, this.yc + this.size * 0.35);
             this.value = true;
         } else {
+            this.canvas.fillStyle = '#fff';
+            this.canvas.fill(this.fill.object);
+            this.canvas.strokeStyle = this.mainColor;
+            this.canvas.stroke(this.border.object);
             this.canvas.clearRect(this.xc - this.size * 0.3, this.yc - this.size * 0.5, this.size * 0.5, this.size);
             this.value = false;
         }
