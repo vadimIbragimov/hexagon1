@@ -26,6 +26,7 @@ export class Hexagon {
 
     changeValue() {
         if (!this.value) {
+            this.canvas.fillStyle = this.mainColor;
             this.canvas.font = `${this.size}px Arial`;
             this.canvas.fillText('1', this.xc - this.size * 0.3, this.yc + this.size * 0.35);
             this.value = true;
