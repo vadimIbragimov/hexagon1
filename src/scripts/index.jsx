@@ -1,5 +1,11 @@
-import {PrintedArea} from "./PrintedArea.js";
+import {PrintedArea} from "./PrintedArea.js"
+import '../css/style.css'
+import * as $ from 'jquery'
+import React from 'react'
+import {render} from 'react-dom'
+import App from './App.jsx'
 
+/*
 let printedArea;
 let sizesForm = document.forms['sizes'];
 let findDomensButton = document.getElementById('findDomens');
@@ -47,6 +53,12 @@ autoForm.onsubmit = () => {
 findDomensButton.addEventListener('click', () => {
     printedArea.findDomens();
 });
+*/
+
+
+render (<App />, document.getElementById('app'));
+
+console.log(typeof $('#app'), $('#app'))
 
 
 
