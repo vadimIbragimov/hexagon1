@@ -1,4 +1,5 @@
 export class Hexagon {
+
     constructor(x, y, size, canvas,paddingLeft,paddingTop) {
         let lineWidth = 2;
         this.size = size;

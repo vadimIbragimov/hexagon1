@@ -5,26 +5,22 @@ class SizesForm extends React.Component {
         super(props)
 
         this.state = {
-            L: props.L,
-            M: props.M,
-            N: props.N
+            L: 3,
+            M: 5,
+            N: 7
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
-        console.log(this.context)
     }
 
     handleChange(event) {
-        console.log({...this.state, [event.target.name]: parseInt(event.target.value)})
         this.setState({...this.state, [event.target.name]: parseInt(event.target.value)})
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this);
-        return false;
+        this.props.onSubmit(this.state)
     }
 
     render() {

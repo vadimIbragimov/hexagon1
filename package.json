@@ -7,10 +7,12 @@
     "@babel/polyfill": "^7.10.4",
     "chalk": "^4.1.0",
     "jquery": "^3.5.1",
+    "konva": "^7.0.3",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-konva": "^16.13.0-3",
     "scripts": "^0.1.0"
   },
   "browserslist": "> 0.25%, not dead",
