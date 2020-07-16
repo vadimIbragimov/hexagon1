@@ -1,9 +1,11 @@
 import  React from 'react'
-import SizesForm from './pageElements/SizesForm.jsx'
-import AutoForm from './pageElements/AutoForm.jsx'
-import PrintedArea from  './pageElements/PrintedArea.jsx'
+import SizesForm from './SizesForm.jsx'
+import AutoForm from './AutoForm.jsx'
+import PrintedArea from './PrintedArea.jsx'
 import {Layer, Rect, Stage, Group} from 'react-konva'
-import Hexagon from "./pageElements/Hexagon.jsx";
+import Hexagon from "./Hexagon.jsx";
+import findDomens from "../findDomens";
+import DomensInfo from "./DomensInfo.jsx";
 
 
 class App extends React.Component{
@@ -12,14 +14,16 @@ class App extends React.Component{
 
         this.state = {
             gridSizes: undefined,
-            probability: undefined,
-            domens: []
+            probability: undefined
         }
         this.hexagons = []
+        this.domens = []
         this.handleSubmitSizesForm = this.handleSubmitSizesForm.bind(this)
         this.handleChangeCellValue = this.handleChangeCellValue.bind(this)
         this.handleSubmitAutoForm = this.handleSubmitAutoForm.bind(this)
         this.handleRenderGrid = this.handleRenderGrid.bind(this)
+        this.handleSearchDomensClick = this.handleSearchDomensClick.bind(this)
+        this.handleCreateDomensInfo = this.handleCreateDomensInfo.bind(this)
     }
 
     handleSubmitSizesForm(gridSizes){
@@ -27,9 +31,10 @@ class App extends React.Component{
         this.setState({...this.state, gridSizes: gridSizes})
     }
 
-    handleChangeCellValue(xPos,yPos,newValue){
-        console.log(this)
+    handleChangeCellValue(xPos,yPos,newValue, changeValueFunc){
         this.hexagons.find(hexagon => hexagon.xPos === xPos && hexagon.yPos === yPos).value = newValue
+        this.state.probability = undefined
+        console.log(this)
     }
 
     handleRenderGrid(hexagons){
@@ -42,6 +47,19 @@ class App extends React.Component{
         this.setState({...this.state, probability: probability})
     }
 
+    handleSearchDomensClick(){
+        const domens = findDomens(this.hexagons)
+        domens.forEach(domen => {
+            const color = Konva.Util.getRandomColor()
+            domen.cells.forEach(cell=>cell.changeColorFunc(color))
+        })
+        this.setDomensInfoFunc(domens,this.hexagons, this.state.probability)
+    }
+
+    handleCreateDomensInfo(setInfoFunc){
+        this.setDomensInfoFunc = setInfoFunc
+    }
+
     render(){
         return (
             <div>
@@ -51,17 +69,14 @@ class App extends React.Component{
                     hexagonSize={20}
                     padding={2}
                     probability={this.state.probability}
-                    domens={this.state.domens}
                     onChangeCellValue={this.handleChangeCellValue}
                     onRender={this.handleRenderGrid}
                 />
                 {this.state.gridSizes ?
                     <div id='Menu'>
                         <AutoForm onSubmit={this.handleSubmitAutoForm}/>
-                        <button className='marginTop'>Посчитать домены</button>
-                        {this.state.domens.length > 0 ?
-                            <span>Количество доменов : <b>{this.state.domens.length}</b></span>
-                        :null}
+                        <button className='marginTop' onClick={this.handleSearchDomensClick}>Посчитать домены</button>
+                        <DomensInfo onCreate={this.handleCreateDomensInfo}/>
                     </div>
                 : null}
             </div>

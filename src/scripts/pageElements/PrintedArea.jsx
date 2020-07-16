@@ -11,6 +11,7 @@ class PrintedArea extends React.Component {
         };
         this.hexagons = []
         this.handleRenderHexagon = this.handleRenderHexagon.bind(this);
+        console.log('created printedArea')
     }
 
     handleRenderHexagon(hexagon){
@@ -26,6 +27,7 @@ class PrintedArea extends React.Component {
             let xBais = yPos < l ? Math.floor((l - yPos - l % 2) / 2) : Math.floor((yPos - l + 1 + (l - 1) % 2) / 2); //смещение по x
             for (let xPos = xBais; xPos < xBais + length; xPos++) {
                 const key = l.toString().concat(m, n, xPos, yPos, Date.now())
+                const hexagon =
                 ret.push((<Hexagon
                     key={key}
                     xPosition={xPos}
@@ -34,6 +36,7 @@ class PrintedArea extends React.Component {
                     padding={this.props.padding}
                     probability={this.props.probability}
                     onRender={this.handleRenderHexagon}
+                    onChangeValue={this.props.onChangeCellValue}
                 />));
             }
             yPos < Math.min(l, m) - 1 ? length++ : yPos < Math.max(l, m) - 1 ? null : length-- //длина
@@ -46,6 +49,7 @@ class PrintedArea extends React.Component {
         //console.log('render printedArea: ', this)
         if (this.props.gridSizes) {
             const hexagons = this.props.gridSizes ? this.printGrid(this.props.gridSizes) : []
+            this.props.onRender(this.hexagons)
             const sizes = this.props.gridSizes
             const l = sizes.L, m = sizes.M, n = sizes.N, size = this.props.hexagonSize, padding = this.props.padding
             const height = size * (l + m - 1) + (l + m) * size * Math.cos(Math.PI / 3) + padding * 2
@@ -61,7 +65,7 @@ class PrintedArea extends React.Component {
                     : null
 
             )
-        } else return (<div/>)
+        } else return null
     }
 
 }

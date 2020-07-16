@@ -1,6 +1,7 @@
 import React from 'react'
 import {Layer, Rect, Stage, Group, Shape, Text} from 'react-konva'
 import Konva from 'konva'
+import findDomens from "../findDomens";
 
 const getHexagonVertices = (xCenter, yCenter, size) => {
     const vertices = [];
@@ -32,16 +33,29 @@ class Hexagon extends React.Component {
             center: getCenterByGridPosition(props.xPosition,props.yPosition,props.size, props.padding),
             size: props.size,
             color: '#FFF',
-            value: !this.props.probability ? false : Math.random() >= 1 - this.props.probability
-        };
-        this.props.onRender({xPos: this.props.xPosition, yPos: this.props.yPosition, value: this.state.value})
+            value: this.props.probability ? Math.random() >= 1 - this.props.probability : false
+        }
+
         this.handleClick = this.handleClick.bind(this)
+        this.changeColor = this.changeColor.bind(this)
         this.print = this.print.bind(this)
+
+        this.props.onRender({
+            xPos: this.props.xPosition,
+            yPos: this.props.yPosition,
+            value: this.state.value,
+            changeColorFunc: this.changeColor
+        })
+    }
+
+    changeColor(color){
+        this.setState({...this.state, color: color})
     }
 
     handleClick() {
         this.setState({...this.state, value: !this.state.value})
         console.log(this.state)
+        this.props.onChangeValue(this.props.xPosition, this.props.yPosition, this.state.value)
     }
 
     print(ctx, figure) {
@@ -72,13 +86,14 @@ class Hexagon extends React.Component {
                            hexagon.print(ctx, this)
                        }}
                 />
-                {this.state ? <Text
-                    x={this.state.center.x - this.state.size * 0.55}
+                {this.state.value ? <Text
+                    x={this.state.center.x - this.state.size * 0.35}
                     y={this.state.center.y - this.state.size * 0.45}
-                    text={this.props.xPosition + ',' + this.props.yPosition}
+                    text='1'
                     fill='black'
                     fontSize={this.state.size}
                     onClick={this.handleClick}
+                    title={this.props.xPosition + ',' + this.props.yPosition}
                 /> : null}
             </Group>
         )

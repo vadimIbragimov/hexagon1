@@ -3,7 +3,7 @@ import '../css/style.css'
 import * as $ from 'jquery'
 import React from 'react'
 import {render} from 'react-dom'
-import App from './App.jsx'
+import App from './pageElements/App.jsx'
 
 /*
 let printedArea;
