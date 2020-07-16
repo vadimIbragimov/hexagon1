@@ -1,10 +1,9 @@
-export class Sequence{
+export default class Sequence{
     constructor() {
         this.val = 0
     }
     nextVal(){
-        let ret = this.val++;
-        return ret
+        return this.val++
     }
     currentVal(){
         return this.val
