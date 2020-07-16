@@ -1,4 +1,4 @@
-import Sequence from './Sequence'
+import Sequence from '../classes/Sequence'
 
 const checkAround = (xPos1, yPos1, xPos2, yPos2) => {
     let ret = false

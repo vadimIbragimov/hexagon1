@@ -1,5 +1,5 @@
 import React from 'react'
-import Sequence from '../Sequence';
+import Sequence from '../classes/Sequence';
 
 export default class DomensInfo extends React.Component {
     constructor(props) {

@@ -1,5 +1,4 @@
 import React from 'react'
-import {Group, Shape, Text} from 'react-konva'
 
 class Hexagon extends React.Component {
     constructor(props) {
@@ -26,28 +25,30 @@ class Hexagon extends React.Component {
         ctx.fillStrokeShape(figure);
     }
 
+    getPoints(){
+        return this.props.vertices.reduce((acc, point)=>acc+point.x + ','+ point.y+' ', '')
+    }
+
 
     render() {
         const hexagon = this
         return (
-            <Group>
-                <Shape fill={this.props.fillColor}
+            <g>
+                <polygon fill={this.props.fillColor}
                        stroke='black'
+                       strokeWidth='2'
+                       points={this.getPoints()}
                        onClick={this.handleClick}
-                       sceneFunc={function (ctx) {
-                           hexagon.print(ctx, this)
-                       }}
                 />
-                {this.props.value ? <Text
-                    x={this.props.center.x - this.props.size * 0.35}
-                    y={this.props.center.y - this.props.size * 0.45}
-                    text='1'
+                {this.props.value ? <text
+                    x={this.props.center.x - this.props.size * 0.25}
+                    y={this.props.center.y + this.props.size * 0.35}
                     fill='black'
+                    style={{cursor: 'default'}}
                     fontSize={this.props.size}
                     onClick={this.handleClick}
-                    title={this.props.xPosition + ',' + this.props.yPosition}
-                /> : null}
-            </Group>
+                >1</text> : null}
+            </g>
         )
     }
 }
