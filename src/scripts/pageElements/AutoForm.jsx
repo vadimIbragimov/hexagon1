@@ -16,7 +16,6 @@ class AutoForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault()
         this.props.onSubmit(this.state.value)
-        console.log(this.state.value)
     }
 
     render() {

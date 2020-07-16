@@ -1,66 +1,19 @@
 import React from 'react'
-import {Layer, Rect, Stage, Group, Shape, Text} from 'react-konva'
-import Konva from 'konva'
-import findDomens from "../findDomens";
-
-const getHexagonVertices = (xCenter, yCenter, size) => {
-    const vertices = [];
-    let x = xCenter, y = yCenter - ((size * Math.cos(Math.PI / 3)) + size / 2);
-
-    for (let side = 0; side < 6; side++) {
-        vertices.push({x, y});
-        x = x + size * Math.sin(Math.PI / 3 - side * Math.PI / 3);
-        y = y + size * Math.cos(Math.PI / 3 - side * Math.PI / 3);
-    }
-    return vertices
-}
-
-const getCenterByGridPosition = (xPosition,yPosition, size, padding) => {
-    const heightTriangle = size * Math.cos(Math.PI / 3)
-    const widthTriangle = size * Math.sin(Math.PI / 3)
-    return {
-        x: xPosition * (widthTriangle * 2) + (1 + yPosition % 2) * widthTriangle + padding,
-        y: yPosition * (size + heightTriangle) + heightTriangle + size / 2 + padding
-    }
-}
-
-console.log(getHexagonVertices(20, 20, 20))
+import {Group, Shape, Text} from 'react-konva'
 
 class Hexagon extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            center: getCenterByGridPosition(props.xPosition,props.yPosition,props.size, props.padding),
-            size: props.size,
-            color: '#FFF',
-            value: this.props.probability ? Math.random() >= 1 - this.props.probability : false
-        }
-
         this.handleClick = this.handleClick.bind(this)
-        this.changeColor = this.changeColor.bind(this)
-        this.print = this.print.bind(this)
-
-        this.props.onRender({
-            xPos: this.props.xPosition,
-            yPos: this.props.yPosition,
-            value: this.state.value,
-            changeColorFunc: this.changeColor
-        })
-    }
-
-    changeColor(color){
-        this.setState({...this.state, color: color})
     }
 
     handleClick() {
-        this.setState({...this.state, value: !this.state.value})
-        console.log(this.state)
-        this.props.onChangeValue(this.props.xPosition, this.props.yPosition, this.state.value)
+        this.props.onClick(this.props.cellKey)
     }
 
     print(ctx, figure) {
-        const center = this.state.center
-        const vertices = getHexagonVertices(center.x, center.y, this.state.size)
+        const center = this.props.center
+        const vertices = this.props.vertices
         let vertex;
         ctx.beginPath();
         ctx.moveTo(vertices[0].x, vertices[0].y);
@@ -75,23 +28,22 @@ class Hexagon extends React.Component {
 
 
     render() {
-        //console.log('render hexagon: ', this)
         const hexagon = this
         return (
             <Group>
-                <Shape fill={this.state.color}
+                <Shape fill={this.props.fillColor}
                        stroke='black'
                        onClick={this.handleClick}
                        sceneFunc={function (ctx) {
                            hexagon.print(ctx, this)
                        }}
                 />
-                {this.state.value ? <Text
-                    x={this.state.center.x - this.state.size * 0.35}
-                    y={this.state.center.y - this.state.size * 0.45}
+                {this.props.value ? <Text
+                    x={this.props.center.x - this.props.size * 0.35}
+                    y={this.props.center.y - this.props.size * 0.45}
                     text='1'
                     fill='black'
-                    fontSize={this.state.size}
+                    fontSize={this.props.size}
                     onClick={this.handleClick}
                     title={this.props.xPosition + ',' + this.props.yPosition}
                 /> : null}

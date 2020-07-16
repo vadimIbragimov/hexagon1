@@ -1,5 +1,5 @@
 import React from 'react'
-import {Sequence} from "../Sequence";
+import Sequence from '../Sequence';
 
 export default class DomensInfo extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class DomensInfo extends React.Component {
     }
 
     setDomensInfo(domens, hexagons, probability) {
-        this.state.calculations.length > 9 ? this.state.calculations.splice(0,1) : null
+        this.state.calculations.length > 9 ? this.state.calculations.splice(0, 1) : null
         this.setState({
             calculations: this.state.calculations.concat({
                 id: this.trSeq.nextVal(),
@@ -28,8 +28,8 @@ export default class DomensInfo extends React.Component {
         })
     }
 
-    getRows(){
-        return this.state.calculations.map(calc=> (<tr key={calc.id}>
+    getRows() {
+        return this.state.calculations.map(calc => (<tr key={calc.id}>
             <td>{calc.probability}</td>
             <td>{calc.allDomens}</td>
             <td>{calc.singleLinkDomens}</td>
@@ -44,18 +44,18 @@ export default class DomensInfo extends React.Component {
                     <span>Количество доменов : <b>{this.state.domens}</b></span>
                     <table>
                         <tbody>
-                            <tr>
-                                <td rowSpan="2">Вероятность</td>
-                                <td colSpan="2">Количество доменов в решётке</td>
-                                <td rowSpan="2">Количество ячеек в решётке (L;M;N),<br/> из них имеющих значение 1</td>
-                            </tr>
-                            <tr>
-                                <td>Всего</td>
-                                <td>Из них неодносвязных</td>
-                            </tr>
+                        <tr>
+                            <td rowSpan="2">Вероятность</td>
+                            <td colSpan="2">Количество доменов в решётке</td>
+                            <td rowSpan="2">Количество ячеек в решётке (L;M;N),<br/> из них имеющих значение 1</td>
+                        </tr>
+                        <tr>
+                            <td>Всего</td>
+                            <td>Из них неодносвязных</td>
+                        </tr>
                         </tbody>
                         <tbody>
-                            {this.getRows()}
+                        {this.getRows()}
                         </tbody>
                     </table>
                 </div>
